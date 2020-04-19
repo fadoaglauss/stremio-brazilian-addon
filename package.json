@@ -1,0 +1,13 @@
+{
+    "name": "brazilian-stremio-addon",
+    "version": "0.0.1",
+    "description": "Stremio addon for dubbed movies in portuguese (brazil).",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "magnet-uri": "^5.2.4",
+        "stremio-addon-sdk": "^1.2.0"
+    }
+}
