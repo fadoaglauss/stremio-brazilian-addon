@@ -1,4 +1,4 @@
-var { mongoose } = require('./config');
+var { mongoose } = require('../../config');
 const Schema = mongoose.Schema;
 
 const StreamSchema = new Schema({
