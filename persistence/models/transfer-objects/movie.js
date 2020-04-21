@@ -11,6 +11,7 @@ module.exports = {
         releaseInfo: "2020",
         imdbRating: 6.7,
         runtime: "2 h 21 min",
+        catalogs: ["BrazilianCatalog"],
     },
     magnets: [""],
 }

@@ -1,3 +1,5 @@
+var port = process.env.PORT || 3000
+
 const getRouter = require('./router')
 const serveHTTP = require('./serveHTTP')
 const { addonBuilder } = require('stremio-addon-sdk')
@@ -42,4 +44,4 @@ addon.defineCatalogHandler((args) => {
     })
 })
 
-serveHTTP(addon.getInterface(), { port: 7032, getRouter })
+serveHTTP(addon.getInterface(), { port, getRouter })

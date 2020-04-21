@@ -6,7 +6,7 @@ manifest = {
     resources: ["catalog", "stream", "meta"],
     types: ["movie"],
     catalogs,
-    idPrefixes: ["br"]
+    idPrefixes: ["br"],
 }
 catalogs = [
     {
@@ -16,8 +16,8 @@ catalogs = [
         extra: [{ name: "search" }]
     }
 ]
-metas = {
-    "BrazilianCatalog": [{
+meta = {
+    
         id: "br18374950",
         type: "movie",
         name: "Star Wars: Episode IX – The Rise of Skywalker",
@@ -29,8 +29,9 @@ metas = {
         releaseInfo: "2020",
         imdbRating: 6.7,
         runtime: "2 h 21 min",
-    }]
-}
+        catalogs: ["BrazilianCatalog"],
+    }
+
 streams = {
     "br18374950": [{
         name: "Star Wars: Episode IX – The Rise of Skywalker",
