@@ -7,7 +7,6 @@
         "start": "node index.js"
     },
     "dependencies": {
-        "magnet-uri": "^5.2.4",
         "stremio-addon-sdk": "^1.2.0"
     }
 }
