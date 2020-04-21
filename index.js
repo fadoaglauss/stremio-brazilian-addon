@@ -1,29 +1,24 @@
 var port = process.env.PORT || 3000
 
-const getRouter = require('./router')
-const serveHTTP = require('./serveHTTP')
-const { addonBuilder } = require('stremio-addon-sdk')
+const manifest = require('./persistence/controllers/manifest-dao');
+const meta = require('./persistence/controllers/meta-dao');
+const stream = require('./persistence/controllers/stream-dao');
 
+const getRouter = require('./router');
+const serveHTTP = require('./serveHTTP');
+const { addonBuilder } = require('stremio-addon-sdk');
 
-
-const seedData = require('./seed')
-const {
-    manifest,
-    catalogs,
-    metas,
-    streams
-} = seedData()
-
-const addon = new addonBuilder(manifest)
+const addon = new addonBuilder(manifest.get())
 
 addon.defineStreamHandler((args) => {
     if (args.id.startsWith('br')) {
-        return Promise.resolve({ streams: streams[args.id] });
+        return Promise.resolve({ streams: stream.getByMetaId(args.id) });
     } else {
         return Promise.resolve({ streams: [] });
     }
 })
 
+/*
 addon.defineMetaHandler((args) => {
     return new Promise((resolve, reject) => {
         if (args.type == 'movie' && args.id.startsWith('br')) {
@@ -31,17 +26,18 @@ addon.defineMetaHandler((args) => {
         }
     })
 })
+*/
 
 addon.defineCatalogHandler((args) => {
     return new Promise((resolve, reject) => {
         if (args.extra.search) {
-            resolve({ metas: catalogs });
-        } else if (args.type == 'movie' && args.id == 'BrazilianCatalog') {
-            resolve({ metas: catalogs });
+            resolve({ metas: meta.getAll() });
+        } else if (args.type == 'movie') {
+            resolve({ metas: meta.getByCatalogId(args.id) });
         } else {
-            reject(new Error('Invalid Catalog Request'))
+            reject(new Error('Invalid Catalog Request'));
         }
     })
 })
 
-serveHTTP(addon.getInterface(), { port, getRouter })
+serveHTTP(addon.getInterface(), { port, getRouter });

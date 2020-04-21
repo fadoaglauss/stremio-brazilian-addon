@@ -1,5 +1,3 @@
-const Catalog = require('./catalog');
-
 var { mongoose } = require('./config');
 const Schema = mongoose.Schema;
 
@@ -29,7 +27,8 @@ const ManifestSchema = new Schema({
         required: true,
     },
     catalogs: {
-        type: [Catalog],
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Catalog',
         required: true,
     },
     idPrefixes: {

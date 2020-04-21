@@ -1,4 +1,5 @@
 const Catalog = require('../models/catalog')
+const Extra = require('../models/catalog-extra')
 
 module.exports = {
     getAll: () => new Promise((resolve, reject) => {
@@ -14,6 +15,10 @@ module.exports = {
             .catch(reject);
     }),
     add: (catalog) => {
+        catalog.extra = catalog.extra.map(e => {
+            return new Extra(e);
+        });   
+        
         const c = new Catalog(catalog);
         return c.save();
     },

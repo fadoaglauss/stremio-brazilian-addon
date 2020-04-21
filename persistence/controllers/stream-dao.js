@@ -1,36 +1,36 @@
-const Streams = require('../models/streams')
+const Stream = require('../models/stream')
 
 module.exports = {
     getAll: () => Promise((resolve, reject) => {
-        Streams
+        Stream
             .find()
             .then(resolve)
             .catch(reject);
     }),
     getByMetaId: (metaId) => Promise((resolve, reject) => {
-        Streams
+        Stream
             .find({ metaId })
             .then(resolve)
             .catch(reject);
     }),
-    add: (streams) => {
-        const s = new Streams(streams);
+    add: (stream) => {
+        const s = new Stream(stream);
         return s.save;
     },
-    update: (streams) => Promise((resolve, reject) => {
-        Streams
-            .update({ metaId: streams.metaId }, streams)
+    update: (stream) => Promise((resolve, reject) => {
+        Stream
+            .update({ metaId: stream.metaId }, stream)
             .then(resolve)
             .catch(reject);
     }),
-    upsert: (streams) => Promise((resolve, reject) => {
-        this.getByMetaId(streams.metaId)
+    upsert: (stream) => Promise((resolve, reject) => {
+        this.getByMetaId(stream.metaId)
             .then(() => {
                 this
                     .update(meta)
                     .then(resolve)
                     .catch(reject)
             })
-            .catch(() => resolve(this.add(streams)));
+            .catch(() => resolve(this.add(stream)));
     }),
 }

@@ -1,7 +1,11 @@
 var { mongoose } = require('./config');
 const Schema = mongoose.Schema;
 
-const StreamDataSchema = new Schema({
+const StreamSchema = new Schema({
+    metaId: {
+        type: String,
+        required: true
+    },
     type: {
         type: String,
         required: false
@@ -20,15 +24,4 @@ const StreamDataSchema = new Schema({
     }
 });
 
-const StreamsSchema = new Schema({
-    metaId: {
-        type: String,
-        required: true
-    },
-    data: {
-        type: [StreamDataSchema],
-        required: true,
-    },
-});
-
-module.exports = mongoose.model('Streams', StreamsSchema);
+module.exports = mongoose.model('Stream', StreamSchema);

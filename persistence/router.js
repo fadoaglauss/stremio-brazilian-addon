@@ -1,7 +1,7 @@
 const { getRouter } = require('stremio-addon-sdk');
 const disassemble = require('./controllers/movie-assembler');
 const metaDao = require('./controllers/meta-dao');
-const streamsDao = require('./controllers/streams-dao');
+const streamDao = require('./controllers/stream-dao');
 
 module.exports = function getProxyRouter(addonInterface) {
     const router = getRouter(addonInterface);
@@ -10,7 +10,6 @@ module.exports = function getProxyRouter(addonInterface) {
         const movie = disassemble(req.body);
 
         metaDao.upsert(movie.meta);
-        streamsDao.upsert(movie.streams);
+        movie.streams.map(m => { streamDao.upsert(m) });
     });
-
 }

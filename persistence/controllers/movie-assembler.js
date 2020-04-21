@@ -1,6 +1,6 @@
 const magnet = require('magnet-uri')
 
-function toStreamsData(movie) {
+function toStreamData(movie) {
     return movie.magnets.map((m) => {
 
         const decode = magnet.decode(m);
@@ -8,6 +8,7 @@ function toStreamsData(movie) {
         const sources = decode.announce;
 
         return {
+            metaId: movie.id,
             title: movie.title,
             type: 'movie',
             infoHash,
@@ -20,9 +21,6 @@ function toStreamsData(movie) {
 module.exports = (movie) => {
     return {
         meta: movie.meta,
-        streams: {
-            metaId: movie.id,
-            data: toStreamsData(movie)
-        },
+        streams: toStreamData(movie),
     }
 }

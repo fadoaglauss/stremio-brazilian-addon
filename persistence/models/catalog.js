@@ -1,22 +1,6 @@
 var { mongoose } = require('./config');
 const Schema = mongoose.Schema;
 
-const Extra = new Schema({
-    name: {
-        type: String,
-    },
-    isRequired: {
-        type: String,
-    },
-    options: {
-        type: String,
-    },
-    optionsLimit: {
-        type: String
-    }
-
-})
-
 const CatalogSchema = new Schema({
     id: {
         type: String,
@@ -31,7 +15,8 @@ const CatalogSchema = new Schema({
         required: true,
     },
     extra: {
-        type: [Extra],
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Extra',
         required: false
     }
 });
