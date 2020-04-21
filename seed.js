@@ -16,8 +16,7 @@ catalogs = [
         extra: [{ name: "search" }]
     }
 ]
-meta = {
-    
+meta = {    
         id: "br18374950",
         type: "movie",
         name: "Star Wars: Episode IX – The Rise of Skywalker",
@@ -42,6 +41,7 @@ streams = {
         ]
     }]
 }
+
 module.exports = () => {
     return {
         manifest,

@@ -16,7 +16,7 @@ const StreamDataSchema = new Schema({
     },
     sources: {
         type: [String],
-        required: true
+        required: false
     }
 });
 

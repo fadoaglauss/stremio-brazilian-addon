@@ -13,4 +13,8 @@ module.exports = {
             .then(resolve)
             .catch(reject);
     }),
+    add: (catalog) => {
+        const c = new Catalog(catalog);
+        return c.save();
+    },
 }

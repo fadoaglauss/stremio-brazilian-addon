@@ -7,4 +7,8 @@ module.exports = {
             .then(resolve)
             .catch(reject);
     }),
+    add: (manifest) => {
+        const m = new Manifest(manifest);
+        return m.save();
+    },
 }

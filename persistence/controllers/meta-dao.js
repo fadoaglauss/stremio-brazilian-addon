@@ -31,11 +31,12 @@ module.exports = {
     }),
     upsert: (meta) => new Promise((resolve, reject) => {
         this.getById(meta.id)
-            .then(() => this
+            .then(() => {
+                this
                     .update(meta)
                     .then(resolve)
                     .catch(reject)
-            )
+            })
             .catch(() => resolve(this.add(meta)));
     }),
 }

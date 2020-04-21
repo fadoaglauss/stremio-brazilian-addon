@@ -19,10 +19,10 @@ function toStreamsData(movie) {
 //Disassemble
 module.exports = (movie) => {
     return {
+        meta: movie.meta,
         streams: {
             metaId: movie.id,
             data: toStreamsData(movie)
         },
-        meta: movie.meta
     }
 }
