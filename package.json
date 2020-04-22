@@ -7,6 +7,7 @@
         "start": "node index.js"
     },
     "dependencies": {
+        "mongoose": "^5.9.10",
         "stremio-addon-sdk": "^1.2.0"
     }
 }
