@@ -56,7 +56,7 @@ stream.add({
 
 
 m = manifest.get()
-console.log(m)
+console.log(await m)
 
 /*
 const addon = new addonBuilder(m[0])

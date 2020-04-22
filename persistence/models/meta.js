@@ -15,7 +15,7 @@ const MetaSchema = new Schema({
         required: true
     },
     genres: {
-        type: 'String',
+        type: ['String'],
         required: false
     },
     poster: {
