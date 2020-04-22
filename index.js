@@ -3,12 +3,11 @@ var port = process.env.PORT || 3000
 const manifest = require('./persistence/controllers/manifest-dao');
 const meta = require('./persistence/controllers/meta-dao');
 const stream = require('./persistence/controllers/stream-dao');
+const catalog = require('./persistence/controllers/catalog-dao');
 
 const getRouter = require('./persistence/router');
 const serveHTTP = require('./serveHTTP');
 const { addonBuilder } = require('stremio-addon-sdk');
-
-
 
 catalogs = [catalog.add({
     type: "movie",

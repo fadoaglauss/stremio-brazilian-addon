@@ -1,16 +1,16 @@
-const catalogDao = require('./persistence/controllers/catalog-dao');
-const manifestDao = require('./persistence/controllers/manifest-dao');
-const metaDao = require('./persistence/controllers/meta-dao');
-const streamDao = require('./persistence/controllers/stream-dao');
+const catalog = require('./persistence/controllers/catalog-dao');
+const manifest = require('./persistence/controllers/manifest-dao');
+const meta = require('./persistence/controllers/meta-dao');
+const stream = require('./persistence/controllers/stream-dao');
 
-catalogs = [catalogDao.add({
+catalogs = [catalog.add({
     type: "movie",
     id: "BrazilianCatalog",
     name: "Filmes Dublados (ptbr)",
     extra: [{ name: "search" }]
 }).id];
 
-manifestDao.add({
+manifest.add({
     id: "brazilian-addon",
     name: "Brazilian Addon",
     version: "0.0.1",
@@ -21,7 +21,7 @@ manifestDao.add({
     idPrefixes: ["br"],
 });
 
-metaDao.add({
+meta.add({
     id: "br18374950",
     type: "movie",
     name: "Star Wars: Episode IX – The Rise of Skywalker",
@@ -36,7 +36,7 @@ metaDao.add({
     catalogs: ["BrazilianCatalog"],
 });
 
-streamDao.add({
+stream.add({
     metaId: "br18374950",
     name: "Star Wars: Episode IX – The Rise of Skywalker",
     type: "movie",
