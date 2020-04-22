@@ -15,7 +15,7 @@ const CatalogSchema = new Schema({
         required: true,
     },
     extra: {
-        type: [mongoose.Schema.Types.ObjectId],
+        type: [mongoose.ObjectId],
         ref: 'Extra',
         required: false
     }
