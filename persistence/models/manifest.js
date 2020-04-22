@@ -27,7 +27,7 @@ const ManifestSchema = new Schema({
         required: true,
     },
     catalogs: {
-        type: [mongoose.Schema.Types.ObjectId],
+        type: [mongoose.ObjectId],
         ref: 'Catalog',
         required: true,
     },
