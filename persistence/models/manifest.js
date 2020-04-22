@@ -3,27 +3,27 @@ const Schema = mongoose.Schema;
 
 const ManifestSchema = new Schema({
     id: {
-        type: String,
+        type: 'String',
         required: true,
     },
     name: {
-        type: String,
+        type: 'String',
         required: true,
     },
     version: {
-        type: String,
+        type: 'String',
         required: true,
     },
     description: {
-        type: String,
+        type: 'String',
         required: true,
     },
     resources: {
-        type: [String],
+        type: ['String'],
         required: true,
     },
     types: {
-        type: [String],
+        type: ['String'],
         required: true,
     },
     catalogs: {
@@ -32,7 +32,7 @@ const ManifestSchema = new Schema({
         required: true,
     },
     idPrefixes: {
-        type: [String],
+        type: ['String'],
         required: true,
     },
 });

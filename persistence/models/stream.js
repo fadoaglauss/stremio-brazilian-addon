@@ -3,23 +3,23 @@ const Schema = mongoose.Schema;
 
 const StreamSchema = new Schema({
     metaId: {
-        type: String,
+        type: 'String',
         required: true
     },
     type: {
-        type: String,
+        type: 'String',
         required: false
     },
     title: {
-        type: String,
+        type: 'String',
         required: false
     },
     infoHash: {
-        type: String,
+        type: 'String',
         required: true
     },
     sources: {
-        type: [String],
+        type: ['String'],
         required: false
     }
 });

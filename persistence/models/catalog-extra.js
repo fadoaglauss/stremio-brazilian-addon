@@ -3,16 +3,16 @@ const Schema = mongoose.Schema;
 
 const ExtraSchema = Schema({
     name: {
-        type: String,
+        type: 'String',
     },
     isRequired: {
-        type: String,
+        type: 'String',
     },
     options: {
-        type: String,
+        type: 'String',
     },
     optionsLimit: {
-        type: String
+        type: 'String'
     }
 });
 

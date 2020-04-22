@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 const CatalogSchema = new Schema({
     id: {
-        type: String,
+        type: 'String',
         required: true
     },
     type: {
-        type: String,
+        type: 'String',
         required: true,
     },
     name: {
-        type: String,
+        type: 'String',
         required: true,
     },
     extra: {

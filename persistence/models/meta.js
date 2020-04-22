@@ -3,51 +3,51 @@ const Schema = mongoose.Schema;
 
 const MetaSchema = new Schema({
     id: {
-        type: String,
+        type: 'String',
         required: true
     },
     type: {
-        type: String,
+        type: 'String',
         required: true
     },
     name: {
-        type: String,
+        type: 'String',
         required: true
     },
     genres: {
-        type: String,
+        type: 'String',
         required: false
     },
     poster: {
-        type: String,
+        type: 'String',
         required: false
     },
     background: {
-        type: String,
+        type: 'String',
         required: false
     },
     logo: {
-        type: String,
+        type: 'String',
         required: false
     },
     description: {
-        type: String,
+        type: 'String',
         required: false
     },
     releaseInfo: {
-        type: String,
+        type: 'String',
         required: false
     },
     imdbRating: {
-        type: String,
+        type: 'String',
         required: false
     },
     runtime: {
-        type: String,
+        type: 'String',
         required: false
     },
     catalogs: {
-        type: [String],
+        type: ['String'],
         required: true
     }
 });
