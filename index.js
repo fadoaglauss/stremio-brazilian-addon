@@ -8,7 +8,9 @@ const getRouter = require('./persistence/router');
 const serveHTTP = require('./serveHTTP');
 const { addonBuilder } = require('stremio-addon-sdk');
 
-const addon = new addonBuilder(manifest.get())
+m = manifest.get()
+console.log(m)
+const addon = new addonBuilder(m[0])
 
 addon.defineStreamHandler((args) => {
     if (args.id.startsWith('br')) {
