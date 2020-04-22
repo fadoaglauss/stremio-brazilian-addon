@@ -1,6 +1,7 @@
-var { mongoose } = require('../../config');
+var mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const CatalogSchema = new mongoose.Schema({
+const CatalogSchema = new Schema({
     id: {
         type: String,
         required: true
