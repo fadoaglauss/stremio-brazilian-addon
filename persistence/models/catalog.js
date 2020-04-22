@@ -1,7 +1,6 @@
 var { mongoose } = require('../../config');
-const Schema = mongoose.Schema;
 
-const CatalogSchema = new Schema({
+const CatalogSchema = new mongoose.Schema({
     id: {
         type: String,
         required: true

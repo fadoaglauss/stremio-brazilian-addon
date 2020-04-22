@@ -1,7 +1,6 @@
 var { mongoose } = require('../../config');
-const Schema = mongoose.Schema;
 
-const ManifestSchema = new Schema({
+const ManifestSchema = new mongoose.Schema({
     id: {
         type: String,
         required: true,
