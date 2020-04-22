@@ -4,7 +4,7 @@ const manifest = require('./persistence/controllers/manifest-dao');
 const meta = require('./persistence/controllers/meta-dao');
 const stream = require('./persistence/controllers/stream-dao');
 
-const getRouter = require('./router');
+const getRouter = require('./persistence/router');
 const serveHTTP = require('./serveHTTP');
 const { addonBuilder } = require('stremio-addon-sdk');
 
