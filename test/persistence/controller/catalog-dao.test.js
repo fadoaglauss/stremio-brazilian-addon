@@ -22,7 +22,7 @@ beforeEach(async () => {
     catalog = await catalogDao.add(catalogStub)
 })
 afterEach(async () => {
-    await Catalog.deleteMany({}).exec()
+    await Catalog.deleteMany().exec()
 })
 
 it('Should save the object with new properties (_id and __v)', async () => {
@@ -33,12 +33,16 @@ it('Should save the object with new properties (_id and __v)', async () => {
     expect(catalog.id).toEqual(catalogStub.id)
 })
 
-it('Should have only added values', async () => {
+it('Should have only added value', async () => {
     var catalogs = await catalogDao.getAll()
     await expect(catalogs).toHaveLength(1)
-
+})
+it('Should have more values if added later', async () => {
     await catalogDao.add(catalogStub)
 
     catalogs = await catalogDao.getAll()
     await expect(catalogs).toHaveLength(2)
+})
+it('Should have correct extra definitions', () => {
+    expect(catalog.extra[0]).toHaveProperty("name","search")
 })

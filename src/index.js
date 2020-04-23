@@ -3,6 +3,7 @@ const {
     PORT
 } = require('./config')
 const manifestDao = require('./persistence/controllers/manifest-dao');
+const catalogDao = require('./persistence/controllers/catalog-dao');
 const metaDao = require('./persistence/controllers/meta-dao');
 const streamDao = require('./persistence/controllers/stream-dao');
 
@@ -12,9 +13,10 @@ const {
     addonBuilder
 } = require('stremio-addon-sdk');
 
-mongoose.connection.once('open', () => {
-    var manifest = manifestDao.get()
-    const addon = new addonBuilder(manifest)
+mongoose.connection.once('open', async () => {
+    var manifest = await manifestDao.get()
+
+    const addon = new addonBuilder(manifest.toObject())
 
     addon.defineStreamHandler(async (args) => {
         if (args.id.startsWith('br')) return {
@@ -39,7 +41,7 @@ mongoose.connection.once('open', () => {
         }
     })
 
-    serveHTTP(addon.getInterface(), {
+    await serveHTTP(addon.getInterface(), {
         port: PORT,
         getRouter
     });

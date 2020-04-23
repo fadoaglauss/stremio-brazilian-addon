@@ -23,4 +23,6 @@ module.exports = function getProxyRouter(addonInterface) {
             .then(() => res.send(200))
             .catch(err => res.send(err))
     });
+
+    return router
 }

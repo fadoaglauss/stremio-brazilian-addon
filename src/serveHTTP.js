@@ -6,6 +6,7 @@ const landingTemplate = require('stremio-addon-sdk/src/landingTemplate')
 const opn = require('opn')
 
 function serveHTTP(addonInterface, opts = {}) {
+	
 	if (addonInterface.constructor.name !== 'AddonInterface') {
 		throw new Error('first argument must be an instance of AddonInterface')
 	}

@@ -28,7 +28,7 @@ beforeEach(async () => {
         name: "Brazilian Addon",
         version: "0.0.1",
         description: "Stremio addon for dubbed movies in portuguese (brazil).",
-        resources: ["catalog", "stream", "meta"],
+        resources: ["catalog", "stream"],
         types: ["movie"],
         catalogs: [catalog],
         idPrefixes: ["br"]
@@ -59,5 +59,8 @@ describe('When a manifest is added to db', () => {
         expect(manifest.catalogs).toEqual(expect.arrayContaining([expect.objectContaining({
             id: catalogStub.id
         })]))
+    })
+    it('should have a complete catalogs property', async () => {
+        expect(manifest.catalogs).toMatchObject(catalogStub)
     })
 })
