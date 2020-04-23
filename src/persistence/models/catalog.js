@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-const ExtraSchema = require('./catalog-extra').ExtraSchema
 
 const Schema = mongoose.Schema;
 
