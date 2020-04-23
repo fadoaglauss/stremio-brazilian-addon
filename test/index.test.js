@@ -11,7 +11,8 @@ var manifest
 
 describe('Given a manifest retrieved by mongo db', () => {
     beforeAll(async () => {
-        await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`)
+        await require('../src/config')
+        /* await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail) */
     })
     afterAll(async () => {
         await mongoose.disconnect()

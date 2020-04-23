@@ -6,7 +6,8 @@ it('Should exists and be in a default state', () => {
 
 describe('Mongo connection dependent tets', ()=>{
     beforeAll(async () => {
-        await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail)
+        await require('../src/config')
+        /* await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail) */
     })
     afterAll(async () => {
         await mongoose.disconnect().catch(fail)

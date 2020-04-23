@@ -14,7 +14,8 @@ var catalogStub = {
 var manifestStub
 var catalog
 beforeAll(async () => {
-    await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`)
+    await require('../../../src/config')
+    /* await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail) */
 })
 afterAll(async () => {
     await mongoose.disconnect()
