@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+    addon:
+        build: .
+        command: start
+        ports:
+            - "80:80"
+        networks: 
+            - db-connection
+        environment: 
+            PORT: 80
+            DB_HOST: mongo
+            DB_PORT: 27017
+            DB_NAME: brazilian-stremio-addon
+    mongo:
+        image: mongo:4.2.6-bionic
+        ports:
+            - "27017:27017"
+        networks: 
+            - db-connection
+        volumes:
+            - ./db:/data/db
+            - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js
+networks: 
+    db-connection:
