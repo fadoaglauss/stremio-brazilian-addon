@@ -1,4 +1,5 @@
 var mongoose = require('mongoose')
+const timeout = require('./timeout')
 
 it('Should exists and be in a default state', () => {
     expect(mongoose.connection.readyState).toEqual(mongoose.connection.states.disconnected)
@@ -7,12 +8,12 @@ it('Should exists and be in a default state', () => {
 describe('Mongo connection dependent tets', ()=>{
     beforeAll(async () => {
         await require('../src/config')
-        /* await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail) */
     })
     afterAll(async () => {
         await mongoose.disconnect().catch(fail)
     })
     it('Should connect to running database', async () => {
+        await timeout(500)
         await expect(mongoose.connection.readyState).toEqual(mongoose.connection.states.connected)
     })
     async function createModel() {

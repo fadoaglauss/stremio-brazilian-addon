@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
-const catalogDao = require('../../../src/persistence/controllers/catalog-dao')
-const manifestDao = require('../../../src/persistence/controllers/manifest-dao')
+const CatalogDAO = require('../../../src/persistence/controllers/catalog-dao')
+const ManifestDAO = require('../../../src/persistence/controllers/manifest-dao')
+var catalogDao
+var manifestDao
 const Manifest = require('../../../src/persistence/models/manifest')
 const Catalog = require('../../../src/persistence/models/catalog')
 var catalogStub = {
@@ -15,7 +17,8 @@ var manifestStub
 var catalog
 beforeAll(async () => {
     await require('../../../src/config')
-    /* await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail) */
+    catalogDao = new CatalogDAO()
+    manifestDao = new ManifestDAO()
 })
 afterAll(async () => {
     await mongoose.disconnect()
@@ -61,6 +64,8 @@ describe('When a manifest is added to db', () => {
         })]))
     })
     it('should have a complete catalogs property', async () => {
-        expect(manifest.catalogs).toMatchObject(catalogStub)
+        for (const prop in catalogStub) {
+            expect(manifest.catalogs[0]).toHaveProperty(prop)
+        }
     })
 })

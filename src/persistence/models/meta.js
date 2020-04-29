@@ -39,7 +39,7 @@ const MetaSchema = new Schema({
         required: false
     },
     imdbRating: {
-        type: 'String',
+        type: 'Number',
         required: false
     },
     runtime: {

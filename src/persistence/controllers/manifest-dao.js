@@ -1,6 +1,12 @@
 const Manifest = require('../models/manifest')
 
-module.exports = {
-    get: async () => await Manifest.findOne().exec(),
-    add: async (manifest) => await (new Manifest(manifest)).save()
+class ManifestDAO{
+    async get(){
+        return Manifest.findOne().exec()
+    }
+    async add(manifest){
+        return (new Manifest(manifest)).save()
+    }
 }
+
+module.exports = ManifestDAO

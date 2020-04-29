@@ -7,6 +7,8 @@ const streamDao = require('./controllers/stream-dao');
 
 
 async function upsertMovieData(movie) {
+    const movie = disassemble(req.body);
+
     await metaDao.upsert(movie.meta);
     await movie.streams.map(m => {
         streamDao.upsert(m)
@@ -17,9 +19,7 @@ module.exports = function getProxyRouter(addonInterface) {
     const router = getRouter(addonInterface);
 
     router.post('/movie', (req, res) => {
-        const movie = disassemble(req.body);
-
-        upsertMovieData(movie)
+        upsertMovieData(req.body)
             .then(() => res.send(200))
             .catch(err => res.send(err))
     });

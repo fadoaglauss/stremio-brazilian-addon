@@ -8,8 +8,8 @@ function toStreamData(movie) {
         const sources = decode.announce;
 
         return {
-            metaId: movie.id,
-            title: movie.title,
+            metaId: movie.meta.id,
+            title: movie.meta.name,
             type: 'movie',
             infoHash,
             sources

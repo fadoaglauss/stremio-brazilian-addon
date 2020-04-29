@@ -1,14 +1,29 @@
 const Meta = require('../models/meta')
-
-module.exports = {
-    getAll: async () => await Meta.find().exec(),
-    getByCatalogId: async (catalogId) => await Meta.find().where(catalogId).in('catalogs').exec(),
-    getById: async (id) => await Meta.find({ id }).exec(),
-    add: async (meta) => await (new Meta(meta)).save(),
-    update: async (meta) => await Meta.update({ id: meta.id }, meta).exec(),
-    upsert: async (meta) => {
-        var exists = await this.getById(meta.id)
-        if(exists) return await this.update(meta)
-        else return await this.add(meta)
+class MetaDAO {
+    async getAll() {
+        return Meta.find().exec()
+    }
+    async getByCatalogId(catalogId) {
+        return Meta.find().where(catalogId).in('catalogs').exec()
+    }
+    async getById(id) {
+        return Meta.findOne({ id }).exec()
+    }
+    async add(meta) {
+        return (new Meta(meta)).save()
+    }
+    async update(meta) {
+        return Meta.update({ id: meta.id }, meta).exec()
+    }
+    async upsert(meta) {
+        let exists = await this.getById(meta.id)
+        if(exists != null){
+            return this.update(exists)
+        }
+        else {
+            return this.add(meta)
+        }
     }
 }
+
+module.exports = MetaDAO

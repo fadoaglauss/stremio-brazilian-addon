@@ -1,8 +1,13 @@
 const Catalog = require('../models/catalog')
-
-const CatalogDao = {
-    getAll: async () => await Catalog.find().exec(),
-    getById: async (id) => await Catalog.find({ id }).exec(),
-    add: async (catalog) => await (new Catalog(catalog)).save()
+class CatalogDAO {
+    async getAll(){
+        return Catalog.find().exec()
+    }
+    async getById(id){
+        Catalog.find({ id }).exec()
+    }
+    async add(catalog){
+        return (new Catalog(catalog)).save()
+    }
 }
-module.exports = CatalogDao
+module.exports = CatalogDAO

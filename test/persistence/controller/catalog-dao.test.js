@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-const catalogDao = require('../../../src/persistence/controllers/catalog-dao')
+const CatalogDAO = require('../../../src/persistence/controllers/catalog-dao')
+var catalogDao
 const Catalog = require('../../../src/persistence/models/catalog')
 
 var catalogStub = {
@@ -13,7 +14,7 @@ var catalogStub = {
 var catalog
 beforeAll(async () => {
     await require('../../../src/config')
-    /* await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail) */
+    catalogDao = new CatalogDAO()
 })
 afterAll(async () => {
     await mongoose.disconnect()
@@ -44,5 +45,5 @@ it('Should have more values if added later', async () => {
     await expect(catalogs).toHaveLength(2)
 })
 it('Should have correct extra definitions', () => {
-    expect(catalog.extra[0]).toHaveProperty("name","search")
+    expect(catalog.extra[0]).toHaveProperty("name", "search")
 })

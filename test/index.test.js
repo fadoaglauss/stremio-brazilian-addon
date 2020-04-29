@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
-const manifestDao = require('../src/persistence/controllers/manifest-dao')
-const catalogDao = require('../src/persistence/controllers/catalog-dao')
+const ManifestDAO = require('../src/persistence/controllers/manifest-dao')
+const CatalogDAO = require('../src/persistence/controllers/catalog-dao')
+var catalogDao
+var manifestDao
 const Manifest = require('../src/persistence/models/manifest')
 const Catalog = require('../src/persistence/models/catalog')
 const { addonBuilder } = require('stremio-addon-sdk');
@@ -12,7 +14,8 @@ var manifest
 describe('Given a manifest retrieved by mongo db', () => {
     beforeAll(async () => {
         await require('../src/config')
-        /* await mongoose.connect(`mongodb://localhost:27017/brazilian-addon-db`).catch(fail) */
+        catalogDao = new CatalogDAO()
+        manifestDao = new ManifestDAO()
     })
     afterAll(async () => {
         await mongoose.disconnect()
