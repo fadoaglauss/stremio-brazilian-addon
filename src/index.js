@@ -20,11 +20,12 @@ mongoose.connection.once('open', async () => {
 
     addon.defineStreamHandler(async (args) => {
         let streamDao = new StreamDAO()
-        if (args.id.startsWith('br')) return {
-            streams: streamDao.getByMetaId(args.id)
-        }
-        else return {
-            streams: []
+        if (args.id.startsWith('br')) {
+            let streams = await streamDao.getByMetaId(args.id)
+            console.log(streams)
+            return { streams }
+        } else {
+            return { streams: [] }
         }
     })
 
@@ -32,16 +33,10 @@ mongoose.connection.once('open', async () => {
         let metaDao = new MetaDAO()
         if (args.extra.search) {
             let metas = await metaDao.getAll()
-            console.log(metas)
-            return {
-                metas
-            }
+            return { metas }
         } else if (args.type == 'movie') {
             let metas = await metaDao.getByCatalogId(args.id)
-            console.log(metas)
-            return {
-                metas
-            }
+            return { metas }
         } else {
             throw new Error('Invalid Catalog Request')
         }

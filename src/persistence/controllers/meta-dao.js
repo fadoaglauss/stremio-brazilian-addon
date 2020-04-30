@@ -4,7 +4,6 @@ class MetaDAO {
         return Meta.find().exec()
     }
     async getByCatalogId(catalogId) {
-        //return Meta.find().where(catalogId).in('catalogs').exec()
         return Meta.find({ catalogs: catalogId }).exec()
     }
     async getById(id) {
