@@ -22,7 +22,6 @@ mongoose.connection.once('open', async () => {
         let streamDao = new StreamDAO()
         if (args.id.startsWith('br')) {
             let streams = await streamDao.getByMetaId(args.id)
-            console.log(streams)
             return { streams }
         } else {
             return { streams: [] }
