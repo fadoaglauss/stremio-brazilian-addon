@@ -4,7 +4,8 @@ class MetaDAO {
         return Meta.find().exec()
     }
     async getByCatalogId(catalogId) {
-        return Meta.find().where(catalogId).in('catalogs').exec()
+        //return Meta.find().where(catalogId).in('catalogs').exec()
+        return Meta.find({ catalogs: catalogId }).exec()
     }
     async getById(id) {
         return Meta.findOne({ id }).exec()
@@ -17,7 +18,7 @@ class MetaDAO {
     }
     async upsert(meta) {
         let exists = await this.getById(meta.id)
-        if(exists != null){
+        if (exists != null) {
             return this.update(meta)
         }
         else {

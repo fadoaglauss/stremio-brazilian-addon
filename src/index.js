@@ -32,11 +32,13 @@ mongoose.connection.once('open', async () => {
         let metaDao = new MetaDAO()
         if (args.extra.search) {
             let metas = await metaDao.getAll()
+            console.log(metas)
             return {
                 metas
             }
         } else if (args.type == 'movie') {
             let metas = await metaDao.getByCatalogId(args.id)
+            console.log(metas)
             return {
                 metas
             }
