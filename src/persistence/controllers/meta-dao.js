@@ -17,6 +17,7 @@ class MetaDAO {
     }
     async upsert(meta) {
         let exists = await this.getById(meta.id)
+        console.log(`Upsert: ${exists}`)
         if(exists != null){
             return this.update(meta)
         }
