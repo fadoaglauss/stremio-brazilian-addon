@@ -1,13 +1,13 @@
 const {
     getRouter
 } = require('stremio-addon-sdk');
+const bodyParser = require('body-parser')
 const disassemble = require('./controllers/movie-assembler');
 const MetaDAO = require('./controllers/meta-dao');
 const StreamDAO = require('./controllers/stream-dao');
 
 
 async function upsertMovieData(movie) {
-    console.log('upsertMovieData in:'+movie)
     let metaDao = new MetaDAO()
     let streamDao = new StreamDAO()
     
@@ -15,9 +15,7 @@ async function upsertMovieData(movie) {
         meta,
         streams
     } = disassemble(movie);
-    console.log(meta)
-    console.log(streams)
-    console.log("hey")
+
     await metaDao.upsert(meta);
     await streams.map(m => {
         streamDao.add(m)
@@ -26,14 +24,12 @@ async function upsertMovieData(movie) {
 function getProxyRouter(addonInterface) {
     const router = getRouter(addonInterface);
     
-    const bodyParser = require('body-parser')
     router.use( bodyParser.json() );       // to support JSON-encoded bodies
     router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
       extended: true
     })); 
 
     router.post('/movie', (req, res) => {
-        console.log(req.body)
         
         upsertMovieData(req.body)
             .then(() => res.send(200))

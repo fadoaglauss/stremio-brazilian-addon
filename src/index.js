@@ -31,12 +31,14 @@ mongoose.connection.once('open', async () => {
     addon.defineCatalogHandler(async (args) => {
         let metaDao = new MetaDAO()
         if (args.extra.search) {
+            let metas = await metaDao.getAll()
             return {
-                metas: metaDao.getAll()
+                metas
             }
         } else if (args.type == 'movie') {
+            let metas = await metaDao.getByCatalogId(args.id)
             return {
-                metas: metaDao.getByCatalogId(args.id)
+                metas
             }
         } else {
             throw new Error('Invalid Catalog Request')
