@@ -7,6 +7,7 @@ const StreamDAO = require('./controllers/stream-dao');
 
 
 async function upsertMovieData(movie) {
+    console.log('upsertMovieData in:')
     let metaDao = new MetaDAO()
     let streamDao = new StreamDAO()
     
@@ -14,6 +15,9 @@ async function upsertMovieData(movie) {
         meta,
         streams
     } = disassemble(movie);
+    console.log(meta)
+    console.log(streams)
+    
     await metaDao.upsert(meta);
     await streams.map(m => {
         streamDao.add(m)
