@@ -28,6 +28,8 @@ function getProxyRouter(addonInterface) {
     const router = getRouter(addonInterface);
 
     router.post('/movie', (req, res) => {
+        console.log(req)
+        
         upsertMovieData(req.body)
             .then(() => res.send(200))
             .catch(err => res.send(err))
