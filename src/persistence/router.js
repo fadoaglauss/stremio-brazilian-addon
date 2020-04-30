@@ -23,9 +23,14 @@ async function upsertMovieData(movie) {
         streamDao.add(m)
     });
 }
-
 function getProxyRouter(addonInterface) {
     const router = getRouter(addonInterface);
+    
+    const bodyParser = require('body-parser')
+    router.use( bodyParser.json() );       // to support JSON-encoded bodies
+    router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+      extended: true
+    })); 
 
     router.post('/movie', (req, res) => {
         console.log(req.body)

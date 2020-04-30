@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@types/jest": "^25.2.1",
+        "body-parser": "^1.19.0",
         "magnet-uri": "^5.2.4",
         "mongoose": "^5.9.10",
         "stremio-addon-sdk": "^1.2.0"
