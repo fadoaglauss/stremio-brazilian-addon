@@ -2,21 +2,29 @@ const Stream = require('../models/stream')
 
 class StreamDao {
     async getAll() {
-        return await Stream.find().exec()
+        return Stream.find().exec()
     }
     async getByMetaId(metaId) {
-        return await Stream.find({ metaId }).exec()
+        return Stream.find({
+            metaId
+        }).exec()
     }
+    
+    async getByMetaIdAndInfoHash(metaId, infoHash) {
+        return Stream.findOne({
+            metaId,
+            infoHash
+        }).exec()
+    }
+
     async add(stream) {
-        return await (new Stream(stream)).save()
-    }
-    async update(stream) {
-        return await Stream.update({ metaId: stream.metaId }, stream).exec()
-    }
-    async upsert(stream) {
-        var exists = await this.getByMetaId(stream.metaId)
-        if(exists) return await this.update(stream)
-        else return await this.add(stream)
+        let exists = await this.getByMetaIdAndInfoHash(stream.metaId, stream.infoHash)
+        if (exists != null) {
+            return exists
+        } else {
+            return (new Stream(stream)).save()
+        }
+        
     }
 }
 

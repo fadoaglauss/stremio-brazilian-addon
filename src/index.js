@@ -6,7 +6,7 @@ const ManifestDAO = require('./persistence/controllers/manifest-dao');
 const MetaDAO = require('./persistence/controllers/meta-dao');
 const StreamDAO = require('./persistence/controllers/stream-dao');
 
-const getRouter = require('./persistence/router');
+const { getRouter } = require('./persistence/router');
 const serveHTTP = require('./serveHTTP');
 const {
     addonBuilder
