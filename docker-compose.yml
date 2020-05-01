@@ -4,14 +4,17 @@ services:
         build: .
         command: start
         ports:
-            - "80:80"
+            - "8080:3000"
         networks: 
             - db-connection
         environment: 
-            PORT: 80
+            PORT: 3000
             DB_HOST: mongo
             DB_PORT: 27017
             DB_NAME: brazilian-stremio-addon
+            WAIT_HOSTS: mongo:27017
+            WAIT_HOSTS_TIMEOUT: 120
+            WAIT_AFTER_HOSTS: 15
     mongo:
         image: mongo:4.2.6-bionic
         ports:
@@ -19,7 +22,9 @@ services:
         networks: 
             - db-connection
         volumes:
-            - ./db:/data/db
+            - db:/data/db
             - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js
 networks: 
     db-connection:
+volumes: 
+    db:

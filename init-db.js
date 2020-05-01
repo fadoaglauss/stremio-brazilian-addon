@@ -1,10 +1,10 @@
-db = db.getSiblingDB('brazilian-addon-db')
-db.manifests.insert({
+br = db.getSiblingDB('brazilian-stremio-addon')
+br.manifests.insert({
     id: "brazilian-addon",
     name: "Brazilian Addon",
     version: "0.0.1",
     description: "Stremio addon for dubbed movies in portuguese (brazil).",
-    resources: ["catalog", "stream", "meta"],
+    resources: ["catalog", "stream"],
     types: ["movie"],
     catalogs: [{
         type: "movie",

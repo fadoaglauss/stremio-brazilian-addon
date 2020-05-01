@@ -10,12 +10,16 @@ async function connect() {
     try {
         let CREDENTIALS = ""
         if (DB_USER && DB_PSK) CREDENTIALS = `${DB_USER}:${DB_PSK}@`
-        await mongoose.connect(`mongodb://${CREDENTIALS}${DB_HOST}:${DB_PORT}/${DB_NAME}`)
+        const mongouri = `mongodb://${CREDENTIALS}${DB_HOST}:${DB_PORT}/${DB_NAME}`
+        await mongoose.connect(mongouri)
+        return mongouri
     } catch (err) {
         throw new Error(`Could not connect to db 'mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}': ${err}`)
     }
 }
-connect().catch(console.error)
+connect().then((uri)=>{
+    console.log(`MONGO URI: ${uri}`)
+}).catch(console.error)
 module.exports = {
     PORT,
     DB_HOST,
