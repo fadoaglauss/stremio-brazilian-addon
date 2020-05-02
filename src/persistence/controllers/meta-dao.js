@@ -6,6 +6,9 @@ class MetaDAO {
     async getByCatalogId(catalogId) {
         return Meta.find({ catalogs: catalogId }).exec()
     }
+    async getByName(name) {
+        return Meta.find({ name: { $regex: name, $options: 'i' } })
+    }
     async getById(id) {
         return Meta.findOne({ id }).exec()
     }

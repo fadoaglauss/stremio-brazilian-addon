@@ -17,62 +17,55 @@ const {
 mongoose.connection.once('open', () => {
     let manifestDao = new ManifestDAO()
     manifestDao.get()
-    .then((manifest)=>{
+        .then((manifest) => {
 
-        const addon = new addonBuilder(manifest.toObject())
+            const addon = new addonBuilder(manifest.toObject())
 
-        addon.defineStreamHandler((args) => {
-            let streamDao = new StreamDAO()
-            if (args.id.startsWith('br')) {
-                return streamDao.getByMetaId(args.id).then((streams)=>{
-                    return {
-                        streams
-                    }
-                }).catch((error)=>{
-                    throw new Error(`Stream Handler ERROR: ${error}`)
-                })
-            } else {
-                return {
-                    streams: []
+            addon.defineStreamHandler((args) => {
+                let streamDao = new StreamDAO()
+                if (args.id.startsWith('br')) {
+                    return streamDao.getByMetaId(args.id).then((streams) => {
+                        return { streams }
+                    }).catch((error) => {
+                        throw new Error(`Stream Handler ERROR: ${error}`)
+                    })
+                } else {
+                    return { streams: [] }
                 }
-            }
-            
+
+            })
+
+            addon.defineCatalogHandler((args) => {
+                let metaDao = new MetaDAO()
+
+                if (args.extra.search) {
+                    return metaDao.getByName(args.extra.search).then((metas) => {
+                        return { metas }
+                    }).catch((error) => {
+                        throw new Error(`Catalog Handler ERROR: ${error}`)
+                    })
+                } else if (args.type == 'movie') {
+                    return metaDao.getAll().then((metas) => {
+                        return { metas }
+                    }).catch((error) => {
+                        throw new Error(`Catalog Handler ERROR: ${error}`)
+                    })
+                }
+                throw new Error('Invalid Catalog Request')
+            })
+
+            return serveHTTP(addon.getInterface(), {
+                port: PORT,
+                getRouter
+            }).then(({ url, server }) => {
+                console.log(`Listening on ${url}`)
+            }).catch((error) => {
+                console.error("Couldn't start http server!")
+                console.error(error)
+            });
         })
-    
-        addon.defineCatalogHandler((args) => {
-            let metaDao = new MetaDAO()
-            if (args.extra.search) {
-                return metaDao.getAll().then((metas)=>{
-                    return {
-                        metas
-                    }
-                }).catch((error)=>{
-                    throw new Error(`Catalog Handler ERROR: ${error}`)
-                })
-            } else if (args.type == 'movie') {
-                return metaDao.getByCatalogId(args.id).then((metas)=>{
-                    return {
-                        metas
-                    }
-                }).catch((error)=>{
-                    throw new Error(`Catalog Handler ERROR: ${error}`)
-                })
-            }
-            throw new Error('Invalid Catalog Request')
-        })
-    
-        return serveHTTP(addon.getInterface(), {
-            port: PORT,
-            getRouter
-        }).then(({ url, server })=>{
-            console.log(`Listening on ${url}`)
-        }).catch((error)=>{
-            console.error("Couldn't start http server!")
+        .catch((error) => {
+            console.error("Something went wrong!")
             console.error(error)
-        });
-    })
-    .catch((error)=>{
-        console.error("Something went wrong!")
-        console.error(error)
-    })
+        })
 })
