@@ -11,7 +11,7 @@ const {
 } = require('./persistence/router');
 const serveHTTP = require('./serveHTTP');
 const {
-    addonBuilder
+    addonBuilder, publishToCentral
 } = require('stremio-addon-sdk');
 
 mongoose.connection.once('open', () => {
@@ -54,6 +54,8 @@ mongoose.connection.once('open', () => {
                 throw new Error('Invalid Catalog Request')
             })
 
+            publishToCentral('https://stremio-brazilian-addon.herokuapp.com/')
+            
             return serveHTTP(addon.getInterface(), {
                 port: PORT,
                 getRouter
