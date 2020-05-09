@@ -15,6 +15,15 @@ class MetaDAO {
     async add(meta) {
         return (new Meta(meta)).save()
     }
+    async addIfAbsent(meta) {
+        let exists = await this.getById(meta.id)
+        if (exists != null) {
+            return exists
+        }
+        else {
+            return this.add(meta)
+        }
+    }
     async update(meta) {
         return Meta.update({ id: meta.id }, meta).exec()
     }

@@ -16,9 +16,9 @@ async function upsertMovieData(movie) {
         streams
     } = disassemble(movie);
 
-    await metaDao.upsert(meta);
+    await metaDao.addIfAbsent(meta);
     await streams.map(m => {
-        streamDao.add(m)
+        streamDao.addIfAbsent(m)
     });
 }
 function getProxyRouter(addonInterface) {

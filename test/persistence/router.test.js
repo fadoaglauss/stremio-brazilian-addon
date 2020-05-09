@@ -23,7 +23,10 @@ const movie = {
         runtime: "2 h 21 min",
         catalogs: ["BrazilianCatalog"],
     },
-    magnets: ["magnet:?xt=urn:btih:a29655cfe1132c578112f5eeb5b927f54797a8b4"],
+    magnets: [{
+        title: "anyTitle Test",
+        magnet: "magnet:?xt=urn:btih:6a8acb2eacd447671dab59dbb6ff1aa61e6ae31f&dn=COMANDO.TO%20-%20Star%20Wars%20-%20A%20Ascens%c3%a3o%20Skywalker%202020%205.1%20(1080p)%20DUAL&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=udp%3a%2f%2fglotorrents.pw%3a6969%2fannounce&tr=udp%3a%2f%2ftracker4.piratux.com%3a6969%2fannounce&tr=udp%3a%2f%2fcoppersurfer.tk%3a6969%2fannounce&tr=http%3a%2f%2ft2.pow7.com%2fannounce&tr=udp%3a%2f%2ftracker.yify-torrents.com%3a80%2fannounce&tr=http%3a%2f%2fwww.h33t.com%3a3310%2fannounce&tr=http%3a%2f%2fexodus.desync.com%2fannounce&tr=http%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=http%3a%2f%2fbt.careland.com.cn%3a6969%2fannounce&tr=http%3a%2f%2fexodus.desync.com%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.istole.it%3a80%2fannounce&tr=http%3a%2f%2ftracker.blazing.de%2fannounce&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=http%3a%2f%2ftracker.yify-torrents.com%2fannounce&tr=udp%3a%2f%2ftracker.prq.to%2fannounce&tr=udp%3a%2f%2ftracker.1337x.org%3a80%2fannounce&tr=udp%3a%2f%2f9.rarbg.com%3a2740%2fannounce&tr=udp%3a%2f%2ftracker.ex.ua%3a80%2fannounce&tr=udp%3a%2f%2fipv4.tracker.harry.lu%3a80%2fannounce&tr=udp%3a%2f%2f12.rarbg.me%3a80%2fannounce&tr=udp%3a%2f%2ftracker.publicbt.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2f11.rarbg.com%2fannounce&tr=udp%3a%2f%2ftracker.ccc.de%3a80%2fannounce&tr=udp%3a%2f%2ffr33dom.h33t.com%3a3310%2fannounce&tr=udp%3a%2f%2fpublic.popcorn-tracker.org%3a6969%2fannounce"
+    }],
 }
 beforeAll(async () => {
     await require('../../src/config')
@@ -35,7 +38,7 @@ afterAll(async () => {
 afterEach(async () => {
     await Promise.all([Meta.deleteMany().exec(), Stream.deleteMany().exec()])
 })
-beforeEach(async()=>{
+beforeEach(async () => {
     await upsertMovieData(movie)
 })
 describe('Meta related tests', () => {
@@ -45,7 +48,7 @@ describe('Meta related tests', () => {
         expect(metas).toHaveLength(1)
 
     })
-    it('Should update meta values when called again', async () => {
+    it('Should not create new meta values when called again', async () => {
         const name = "Star Wars: The Rise of Skywalker"
         await upsertMovieData({
             meta: {
@@ -58,8 +61,20 @@ describe('Meta related tests', () => {
         let metas = await metaDao.getAll()
 
         expect(metas).toHaveLength(1)
+    })
+    it('Should keep old meta when adding new streams', async () => {
+        const name = "Star Wars: The Rise of Skywalker"
+        await upsertMovieData({
+            meta: {
+                ...movie.meta,
+                name
+            },
+            magnets: movie.magnets
+        })
+        let metaDao = new MetaDAO()
+
         expect(metaDao.getById(movie.meta.id)).resolves.toEqual(expect.objectContaining({
-            name
+            name: movie.meta.name
         }))
     })
 })
@@ -67,7 +82,10 @@ describe('Stream related tests', () => {
     it('Should add streams with new infoHash', async () => {
         await upsertMovieData({
             meta: movie.meta,
-            magnets: ["magnet:?xt=urn:btih:8b37e5b540c2bbe9c4f1513504c4f37a9d37b75b"]
+            magnets: [{
+                title: "another magnet",
+                magnet: "magnet:?xt=urn:btih:8b37e5b540c2bbe9c4f1513504c4f37a9d37b75b"
+            }]
         })
 
         await timeout(500)
@@ -81,10 +99,65 @@ describe('Stream related tests', () => {
         await upsertMovieData(movie)
 
         await timeout(500)
-        
+
         let streamDao = new StreamDAO()
         let streams = await streamDao.getByMetaId(movie.meta.id)
 
         expect(streams).toHaveLength(1)
+    })
+    it('Should only add unknown infoHashes from list of streams', async () => {
+        await upsertMovieData({
+            meta: movie.meta,
+            magnets: [
+                {
+                    title: "a last magnet",
+                    magnet: "magnet:?xt=urn:btih:c7e25e85a95fc2ed93395a03a894fa07d93318f6"
+                },
+                ...movie.magnets,
+                {
+                    title: "another magnet",
+                    magnet: "magnet:?xt=urn:btih:8b37e5b540c2bbe9c4f1513504c4f37a9d37b75b"
+                }
+            ]
+        })
+
+        await timeout(500)
+
+        let streamDao = new StreamDAO()
+        let streams = await streamDao.getByMetaId(movie.meta.id)
+
+        expect(streams).toHaveLength(3)
+    })
+    it('Should not remove infoHashes not found on request', async () => {
+        await upsertMovieData({
+            meta: movie.meta,
+            magnets: [{
+                title: "another magnet",
+                magnet: "magnet:?xt=urn:btih:8b37e5b540c2bbe9c4f1513504c4f37a9d37b75b"
+            }]
+        })
+
+        await timeout(500)
+
+        await upsertMovieData({
+            meta: movie.meta,
+            magnets: [
+                {
+                    title: "a last magnet",
+                    magnet: "magnet:?xt=urn:btih:c7e25e85a95fc2ed93395a03a894fa07d93318f6"
+                },
+                {
+                    title: "another magnet",
+                    magnet: "magnet:?xt=urn:btih:8b37e5b540c2bbe9c4f1513504c4f37a9d37b75b"
+                }
+            ]
+        })
+
+        await timeout(500)
+
+        let streamDao = new StreamDAO()
+        let streams = await streamDao.getByMetaId(movie.meta.id)
+
+        expect(streams).toHaveLength(3)
     })
 })

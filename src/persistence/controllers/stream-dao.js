@@ -17,7 +17,7 @@ class StreamDao {
         }).exec()
     }
 
-    async add(stream) {
+    async addIfAbsent(stream) {
         let exists = await this.getByMetaIdAndInfoHash(stream.metaId, stream.infoHash)
         if (exists != null) {
             return exists
