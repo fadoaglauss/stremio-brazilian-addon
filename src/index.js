@@ -54,7 +54,7 @@ mongoose.connection.once('open', () => {
                 throw new Error('Invalid Catalog Request')
             })
 
-            publishToCentral('https://stremio-brazilian-addon.herokuapp.com/')
+            publishToCentral('https://stremio-brazilian-addon.herokuapp.com/manifest.json')
             
             return serveHTTP(addon.getInterface(), {
                 port: PORT,
