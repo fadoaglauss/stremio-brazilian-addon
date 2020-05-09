@@ -2,7 +2,7 @@ version: '3.0'
 services:
     addon:
         build: .
-        command: test
+        command: start
         ports:
             - "8080:3000"
         networks: 

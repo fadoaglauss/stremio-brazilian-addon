@@ -18,26 +18,19 @@ mongoose.connection.once('open', () => {
     let manifestDao = new ManifestDAO()
     manifestDao.get()
         .then((manifest) => {
-
             const addon = new addonBuilder(manifest.toObject())
-
             addon.defineStreamHandler((args) => {
                 let streamDao = new StreamDAO()
-                if (args.id.startsWith('br')) {
-                    return streamDao.getByMetaId(args.id).then((streams) => {
-                        return { streams }
-                    }).catch((error) => {
-                        throw new Error(`Stream Handler ERROR: ${error}`)
-                    })
-                } else {
+                return streamDao.getByMetaId(args.id).then((streams) => {
+                    return { streams }
+                }).catch((error) => {
+                    console.error(`Stream Handler ERROR: ${error}`)
                     return { streams: [] }
-                }
-
+                })
             })
 
             addon.defineCatalogHandler((args) => {
                 let metaDao = new MetaDAO()
-
                 if (args.extra.search) {
                     return metaDao.getByName(args.extra.search).then((metas) => {
                         return { metas }
@@ -45,17 +38,23 @@ mongoose.connection.once('open', () => {
                         throw new Error(`Catalog Handler ERROR: ${error}`)
                     })
                 } else if (args.type == 'movie') {
+                    if (args.extra.genre) {
+                        return metaDao.getByGenre(args.extra.genre).then((metas) => {
+                            return { metas }
+                        }).catch((error) => {
+                            throw new Error(`Catalog Handler ERROR: ${error}`)
+                        })
+                    }
                     return metaDao.getAll().then((metas) => {
                         return { metas }
                     }).catch((error) => {
                         throw new Error(`Catalog Handler ERROR: ${error}`)
                     })
                 }
-                throw new Error('Invalid Catalog Request')
             })
 
             publishToCentral('https://stremio-brazilian-addon.herokuapp.com/manifest.json')
-            
+
             return serveHTTP(addon.getInterface(), {
                 port: PORT,
                 getRouter

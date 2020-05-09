@@ -3,6 +3,9 @@ class MetaDAO {
     async getAll() {
         return Meta.find().exec()
     }
+    async getByGenre(genre) {
+        return Meta.find({ genres: genre }).exec()
+    }
     async getByCatalogId(catalogId) {
         return Meta.find({ catalogs: catalogId }).exec()
     }
