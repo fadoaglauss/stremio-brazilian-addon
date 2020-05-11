@@ -18,7 +18,7 @@ mongoose.connection.once('open', () => {
     let manifestDao = new ManifestDAO()
     manifestDao.get()
         .then((manifest) => {
-            
+
             const addon = new addonBuilder(manifest.toObject())
             addon.defineStreamHandler((args) => {
                 let streamDao = new StreamDAO()
@@ -30,7 +30,7 @@ mongoose.connection.once('open', () => {
                 })
             })
 
-            addon.defineCatalogHandler((args) => { 
+            addon.defineCatalogHandler((args) => {
 
                 let metaDao = new MetaDAO()
                 const skip = parseInt(args.extra.skip) || 0
