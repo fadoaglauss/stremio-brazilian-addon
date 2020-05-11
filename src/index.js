@@ -31,7 +31,7 @@ mongoose.connection.once('open', () => {
             })
 
             addon.defineCatalogHandler((args) => { 
-                               
+
                 let metaDao = new MetaDAO()
                 const skip = parseInt(args.extra.skip) || 0
                 const limit = 100
