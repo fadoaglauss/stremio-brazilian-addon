@@ -18,6 +18,7 @@ mongoose.connection.once('open', () => {
     let manifestDao = new ManifestDAO()
     manifestDao.get()
         .then((manifest) => {
+            
             const addon = new addonBuilder(manifest.toObject())
             addon.defineStreamHandler((args) => {
                 let streamDao = new StreamDAO()
@@ -29,23 +30,26 @@ mongoose.connection.once('open', () => {
                 })
             })
 
-            addon.defineCatalogHandler((args) => {
+            addon.defineCatalogHandler((args) => { 
+                               
                 let metaDao = new MetaDAO()
+                const skip = parseInt(args.extra.skip) || 0
+                const limit = 100
                 if (args.extra.search) {
-                    return metaDao.getByName(args.extra.search).then((metas) => {
+                    return metaDao.getByName(args.extra.search, skip, limit).then((metas) => {
                         return { metas }
                     }).catch((error) => {
                         throw new Error(`Catalog Handler ERROR: ${error}`)
                     })
                 } else if (args.type == 'movie') {
                     if (args.extra.genre) {
-                        return metaDao.getByGenre(args.extra.genre).then((metas) => {
+                        return metaDao.getByGenre(args.id, args.extra.genre, skip, limit).then((metas) => {
                             return { metas }
                         }).catch((error) => {
                             throw new Error(`Catalog Handler ERROR: ${error}`)
                         })
                     }
-                    return metaDao.getAll().then((metas) => {
+                    return metaDao.getByCatalogId(args.id, skip, limit).then((metas) => {
                         return { metas }
                     }).catch((error) => {
                         throw new Error(`Catalog Handler ERROR: ${error}`)

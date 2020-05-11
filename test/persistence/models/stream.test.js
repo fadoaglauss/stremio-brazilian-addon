@@ -13,7 +13,7 @@ afterEach(async () => {
 
 const StreamStub = () => {
     return {
-        metaId: "br18374950",
+        metaId: "tt18374950",
         title: "Star Wars: Episode IX – The Rise of Skywalker",
         type: "movie",
         infoHash: "e606fef7ee4bba72bde96e5c8767702b4fef0f06",

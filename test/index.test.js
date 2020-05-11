@@ -40,7 +40,7 @@ describe('Given a manifest retrieved by mongo db', () => {
             resources: ["catalog", "stream", "meta"],
             types: ["movie"],
             catalogs: [catalog],
-            idPrefixes: ["br"]
+            idPrefixes: ["tt"]
         }
 
         manifest = await manifestDao.add(manifestStub)

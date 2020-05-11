@@ -1,8 +1,8 @@
 br = db.getSiblingDB('brazilian-stremio-addon')
 br.manifests.insert({
     id: "brazilian-addon",
-    name: "Brazilian Addon",
-    logo: 'https://i.ibb.co/gPKTyXw/icon.jpg',
+    name: "Mico-Leão Dublado (BR addon)",
+    logo: 'https://i.ibb.co/9tWdHsv/icon.jpg',
     version: "0.2.0",
     description: "Stremio addon for dubbed movies in portuguese (brazil).",
     resources: ["catalog", "stream"],
@@ -12,7 +12,7 @@ br.manifests.insert({
         id: "BrazilianCatalog",
         name: "Filmes Dublados (ptbr)",
         genres: ["Ação", "Animação", "Aventura",  "Clássico", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Faroeste", "Guerra", "Músicas", "Nacional", "Policial", "Romance", "Suspense", "Terror"],
-        extraSupported: ["search", "genre"]
+        extraSupported: ["search", "genre", "skip"]
     }],
     idPrefixes: ["tt"]
 })

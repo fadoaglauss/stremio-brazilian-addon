@@ -1,19 +1,19 @@
 const Meta = require('../models/meta')
 class MetaDAO {
-    async getAll() {
-        return Meta.find().exec()
+    async getAll(skip=0, limit=100) {
+        return Meta.find().skip(skip).limit(limit).exec()
     }
-    async getByGenre(genre) {
-        return Meta.find({ genres: genre }).exec()
+    async getByGenre(catalogId, genre, skip=0, limit=100) {
+        return Meta.find({ catalogs: catalogId, genres: genre }).skip(skip).limit(limit).exec()
     }
-    async getByCatalogId(catalogId) {
-        return Meta.find({ catalogs: catalogId }).exec()
+    async getByCatalogId(catalogId, skip=0, limit=100) {
+        return Meta.find({ catalogs: catalogId }).skip(skip).limit(limit).exec()
     }
-    async getByName(name) {
-        return Meta.find({ name: { $regex: name, $options: 'i' } })
+    async getByName(name, skip=0, limit=100) {
+        return Meta.find({ name: { $regex: name, $options: 'i' } }).skip(skip).limit(limit).exec()
     }
     async getById(id) {
-        return Meta.findOne({ id }).exec()
+        return Meta.findOne({ id: id }).exec()
     }
     async add(meta) {
         return (new Meta(meta)).save()

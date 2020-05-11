@@ -10,7 +10,7 @@ const Stream = require('../../src/persistence/models/stream');
 
 const movie = {
     meta: {
-        id: "br18374950",
+        id: "tt18374950",
         type: "movie",
         name: "Star Wars: Episode IX – The Rise of Skywalker",
         genres: ["Aventura", "Ficção", "Aventura"],

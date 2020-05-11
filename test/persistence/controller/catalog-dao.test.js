@@ -7,9 +7,8 @@ var catalogStub = {
     type: "movie",
     id: "BrazilianCatalog",
     name: "Filmes Dublados (ptbr)",
-    extra: [{
-        name: "search"
-    }]
+    genres: ["Ação", "Animação", "Aventura", "Clássico", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Faroeste", "Guerra", "Músicas", "Nacional", "Policial", "Romance", "Suspense", "Terror"],
+    extraSupported: ["search", "genre"],
 }
 var catalog
 beforeAll(async () => {
@@ -44,6 +43,11 @@ it('Should have more values if added later', async () => {
     catalogs = await catalogDao.getAll()
     await expect(catalogs).toHaveLength(2)
 })
-it('Should have correct extra definitions', () => {
-    expect(catalog.extra[0]).toHaveProperty("name", "search")
+it('Should have correct genres definitions', () => {
+    expect(catalog.genres).toContain("Aventura")
+    expect(catalog.genres).toContain("Guerra")
+})
+it('Should have correct extra supported definitions', () => {
+    expect(catalog.extraSupported).toContain("search")
+    expect(catalog.extraSupported).toContain("genre")
 })

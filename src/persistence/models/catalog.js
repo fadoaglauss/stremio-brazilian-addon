@@ -15,21 +15,14 @@ const CatalogSchema = new Schema({
         type: 'String',
         required: true,
     },
-    extra: [{
-        name: {
-            type: 'String',
-            required: true
-        },
-        isRequired: {
-            type: 'String',
-        },
-        options: {
-            type: 'String',
-        },
-        optionsLimit: {
-            type: 'String'
-        }
-    }]
+    genres: {
+        type: ['String'],
+        required: false
+    },
+    extraSupported: {
+        type: ['String'],
+        required: false
+    }
 });
 const Catalog = mongoose.model('Catalog', CatalogSchema);
 

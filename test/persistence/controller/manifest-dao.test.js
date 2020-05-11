@@ -9,18 +9,27 @@ var catalogStub = {
     type: "movie",
     id: "BrazilianCatalog",
     name: "Filmes Dublados (ptbr)",
-    extra: [{
-        name: "search"
-    }]
+    genres: ["Ação", "Animação", "Aventura", "Clássico", "Comédia", "Documentário", "Drama", "Fantasia", "Ficção", "Faroeste", "Guerra", "Músicas", "Nacional", "Policial", "Romance", "Suspense", "Terror"],
+    extraSupported: ["search", "genre"],
 }
 var manifestStub
 var catalog
+var origManifest, origCatalog
 beforeAll(async () => {
     await require('../../../src/config')
     catalogDao = new CatalogDAO()
     manifestDao = new ManifestDAO()
+
+    origManifest = await manifestDao.get()
+
+    await Manifest.deleteMany({}).exec()
+    await Catalog.deleteMany({}).exec()
 })
 afterAll(async () => {
+    console.log(origManifest);
+    
+    await manifestDao.add(origManifest || manifestStub)
+
     await mongoose.disconnect()
 })
 beforeEach(async () => {
@@ -33,9 +42,10 @@ beforeEach(async () => {
         description: "Stremio addon for dubbed movies in portuguese (brazil).",
         resources: ["catalog", "stream"],
         types: ["movie"],
-        catalogs: [catalog],
-        idPrefixes: ["br"]
+        catalogs: [catalog.toObject()],
+        idPrefixes: ["tt"]
     }
+
 })
 afterEach(async () => {
     await Manifest.deleteMany({}).exec()
@@ -45,10 +55,13 @@ afterEach(async () => {
 describe('When a manifest is added to db', () => {
     var manifest
     beforeEach(async () => {
-        await manifestDao.add(manifestStub)
+        m = await manifestDao.add(manifestStub)
+
         manifest = await manifestDao.get()
+
     })
     it('should be returned by manifestDao.get', async () => {
+
         expect(manifest).toMatchObject({
             ...manifestStub,
             $__: expect.any(Object),
