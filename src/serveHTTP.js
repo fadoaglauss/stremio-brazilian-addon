@@ -6,7 +6,7 @@ const landingTemplate = require('stremio-addon-sdk/src/landingTemplate')
 const opn = require('opn')
 
 function serveHTTP(addonInterface, opts = {}) {
-	
+
 	if (addonInterface.constructor.name !== 'AddonInterface') {
 		throw new Error('first argument must be an instance of AddonInterface')
 	}
@@ -19,15 +19,15 @@ function serveHTTP(addonInterface, opts = {}) {
 	const app = express()
 	app.use((_, res, next) => {
 		if (cacheMaxAge && !res.getHeader('Cache-Control'))
-			res.setHeader('Cache-Control', 'max-age='+cacheMaxAge+', public')
+			res.setHeader('Cache-Control', 'max-age=' + cacheMaxAge + ', public')
 		next()
-    })
-    
-    if (opts.getRouter){
-        app.use(opts.getRouter(addonInterface))
-    } else {
-        app.use(getRouter(addonInterface))
-    }
+	})
+
+	if (opts.getRouter) {
+		app.use(opts.getRouter(addonInterface))
+	} else {
+		app.use(getRouter(addonInterface))
+	}
 
 	// serve static dir
 	if (opts.static) {
@@ -44,8 +44,8 @@ function serveHTTP(addonInterface, opts = {}) {
 	})
 
 	const server = app.listen(opts.port)
-	return new Promise(function(resolve, reject) {
-		server.on('listening', function() {
+	return new Promise(function (resolve, reject) {
+		server.on('listening', function () {
 			const url = `http://127.0.0.1:${server.address().port}/manifest.json`
 			console.log('HTTP addon accessible at:', url)
 			if (process.argv.includes('--launch')) {
