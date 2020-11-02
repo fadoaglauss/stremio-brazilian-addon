@@ -10,7 +10,7 @@ const StreamDAO = require('./controllers/stream-dao');
 async function upsertMovieData(movie) {
     let metaDao = new MetaDAO()
     let streamDao = new StreamDAO()
-    
+
     const {
         meta,
         streams
@@ -23,14 +23,14 @@ async function upsertMovieData(movie) {
 }
 function getProxyRouter(addonInterface) {
     const router = getRouter(addonInterface);
-    
-    router.use( bodyParser.json() );       // to support JSON-encoded bodies
+
+    router.use(bodyParser.json());       // to support JSON-encoded bodies
     router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-      extended: true
-    })); 
+        extended: true
+    }));
 
     router.post('/movie', (req, res) => {
-        
+
         upsertMovieData(req.body)
             .then(() => res.send(200))
             .catch(err => res.send(err))
