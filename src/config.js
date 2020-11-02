@@ -6,6 +6,7 @@ const DB_PORT = process.env.DB_PORT || 27017
 const DB_NAME = process.env.DB_NAME || "brazilian-addon-db"
 const DB_USER = process.env.DB_USER
 const DB_PSK = process.env.DB_PSK
+
 async function connect() {
     try {
         let CREDENTIALS = ""
@@ -17,9 +18,11 @@ async function connect() {
         throw new Error(`Could not connect to db 'mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}': ${err}`)
     }
 }
-connect().then((uri)=>{
+
+connect().then((uri) => {
     console.log(`MONGO URI: ${uri}`)
 }).catch(console.error)
+
 module.exports = {
     PORT,
     DB_HOST,
