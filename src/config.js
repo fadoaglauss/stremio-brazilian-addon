@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 
-const PORT = process.env.PORT || 3000
 const DB_HOST = process.env.DB_HOST || "localhost"
 const DB_PORT = process.env.DB_PORT || 27017
 const DB_NAME = process.env.DB_NAME || "brazilian-addon-db"
@@ -11,7 +10,7 @@ async function connect() {
     try {
         let CREDENTIALS = ""
         if (DB_USER && DB_PSK) CREDENTIALS = `${DB_USER}:${DB_PSK}@`
-        const mongouri = `mongodb+srv://${CREDENTIALS}${DB_HOST}:${DB_PORT}/${DB_NAME}`
+        const mongouri = `mongodb+srv://${CREDENTIALS}${DB_HOST}/${DB_NAME}`
         await mongoose.connect(mongouri)
         return mongouri
     } catch (err) {
