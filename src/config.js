@@ -14,7 +14,7 @@ async function connect() {
         await mongoose.connect(mongouri)
         return mongouri
     } catch (err) {
-        throw new Error(`Could not connect to db 'mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}': ${err}`)
+        throw new Error(`Could not connect to db 'mongodb://${DB_HOST}/${DB_NAME}': ${err}`)
     }
 }
 
