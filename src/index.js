@@ -57,7 +57,7 @@ mongoose.connection.once('open', () => {
                 }
             })
 
-            publishToCentral('https://stremio-brazilian-addon.herokuapp.com/manifest.json')
+            publishToCentral('http://27a5b2bfe3c0-stremio-brazilian-addon.baby-beamup.club/manifest.json')
 
             return serveHTTP(addon.getInterface(), {
                 port: PORT,
