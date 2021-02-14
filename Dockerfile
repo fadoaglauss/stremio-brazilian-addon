@@ -21,4 +21,4 @@ RUN chmod +x /wait && \
 
 RUN npm install
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD [ "test" ]
+CMD [ "start" ]
